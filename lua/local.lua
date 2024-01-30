@@ -31,16 +31,17 @@ vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- ==== The following are Windows-like system clipboard commands to 
--- copy/cut/paste text (Ctrl-C,X,V)
+-- copy/cut/paste text (Ctrl-C,X,V).  The Opt key must be mapped to Meta
+-- key in Terminal profile setup
 --    copy selection into system clipboard <Opt>-c
-vim.keymap.set("x", "<Char-0x00E7>", [["+y]])
+vim.keymap.set("x", "<M-c>", [["+y]])
 
 --    cut selection into system clipboard <Opt>-x
-vim.keymap.set("x", "<Char-0x2248>", [["+d]])
+vim.keymap.set("x", "<M-x>", [["+d]])
 
 --    paste from system clipboard <Opt>-v for both insert mode and normal mode
-vim.keymap.set("n", "<Char-0x221a>", [["+p]])
-vim.keymap.set("i", "<Char-0x221a>", "<Esc>\"+pa")
+vim.keymap.set("n", "<M-v>", [["+p]])
+vim.keymap.set("i", "<M-v>", "<Esc>\"+pa")
 
 -- ==== End of Windows-like system clipboard commands
 
