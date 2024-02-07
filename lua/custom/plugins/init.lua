@@ -13,6 +13,7 @@ vim.o.undofile = true
 vim.o.backup = false
 vim.o.swapfile = false
 vim.o.incsearch = true
+vim.o.relativenumber = true
 vim.o.termguicolors = true
 
 --- Local keymaps
