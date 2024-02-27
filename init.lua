@@ -627,6 +627,14 @@ mason_lspconfig.setup_handlers {
       filetypes = (servers[server_name] or {}).filetypes,
     }
   end,
+  ['powershell_es'] = function () 
+    require('lspconfig').powershell_es.setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = { powershell = { codeFormatting = { Preset = 'OTBS' } } },
+      filetypes = (servers['powershell_es'] or {}).filetypes,
+    }
+  end
 }
 
 -- [[ Configure nvim-cmp ]]
