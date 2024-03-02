@@ -9,7 +9,6 @@ vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.o.smartindent = true
 vim.o.undodir = os.getenv 'HOME' .. '/.vim/undodir'
-vim.o.undofile = true
 vim.o.backup = false
 vim.o.swapfile = false
 vim.o.incsearch = true
