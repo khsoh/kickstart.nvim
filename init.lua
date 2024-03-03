@@ -542,7 +542,7 @@ require('lazy').setup {
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         tsserver = {},
-        html = { filetypes = { 'html', 'twig', 'hbs'} },
+        html = { filetypes = { 'html', 'twig', 'hbs' } },
         marksman = {},
         --
 
@@ -783,7 +783,7 @@ require('lazy').setup {
 
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'bash', 'c', 'go', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
+        ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = { enable = true },
