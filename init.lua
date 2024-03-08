@@ -545,6 +545,10 @@ require('lazy').setup({
         tsserver = {},
         html = { filetypes = { 'html', 'twig', 'hbs' } },
         marksman = {},
+        powershell_es = {
+          bundle_path = '~/.local/share/nvim/mason/packages/powershell-editor-services',
+          settings = { powershell = { codeFormatting = { Preset = 'OTBS' } } },
+        },
         --
 
         lua_ls = {
