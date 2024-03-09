@@ -546,7 +546,7 @@ require('lazy').setup({
         html = { filetypes = { 'html', 'twig', 'hbs' } },
         marksman = {},
         powershell_es = {
-          bundle_path = '~/.local/share/nvim/mason/packages/powershell-editor-services',
+          bundle_path = vim.fn.stdpath 'data' .. '/mason/packages/powershell-editor-services',
           settings = { powershell = { codeFormatting = { Preset = 'OTBS' } } },
         },
         --
