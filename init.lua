@@ -791,8 +791,22 @@ require('lazy').setup({
 
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup {
-        ensure_installed = {
+        ensure_installed = vim.fn.has 'win32' ~= 1 and {
           'go',
+          'python',
+          'rust',
+          'tsx',
+          'javascript',
+          'typescript',
+          'html',
+          'bash',
+          'c',
+          'html',
+          'lua',
+          'markdown',
+          'vim',
+          'vimdoc',
+        } or {
           'python',
           'rust',
           'tsx',
