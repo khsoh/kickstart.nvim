@@ -806,6 +806,7 @@ require('lazy').setup({
           'vim',
           'vimdoc',
         } or {
+          'go',
           'python',
           'javascript',
           'typescript',
