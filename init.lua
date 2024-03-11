@@ -804,6 +804,7 @@ require('lazy').setup({
           'markdown',
           'vim',
           'vimdoc',
+          'gleam',
         } or {
           'go',
           'python',
