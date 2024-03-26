@@ -555,6 +555,7 @@ require('lazy').setup({
           bundle_path = vim.fn.stdpath 'data' .. '/mason/packages/powershell-editor-services',
           settings = { powershell = { codeFormatting = { Preset = 'OTBS' } } },
         },
+        biome = {},
         --
 
         lua_ls = {
