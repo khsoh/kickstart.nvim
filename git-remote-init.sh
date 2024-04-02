@@ -10,7 +10,7 @@ gitRemotes=$gitTop/.gitremotes
 
 grep "(fetch)" $gitRemotes | while read remote; do
     arg=($(echo $remote | awk '{print $1"\n"$2}'))
-    git remote set-url ${arg[0]} ${arg[1]}
+    git remote set-url ${arg[0]} ${arg[1]} || git remote add ${arg[0]} ${arg[1]}
 done
 
 grep "(push)" $gitRemotes | while read remote; do
