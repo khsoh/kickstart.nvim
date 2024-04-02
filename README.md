@@ -85,6 +85,8 @@ If you're using `powershell.exe`
 git clone https://github.com/khsoh/kickstart.nvim.git $env:USERPROFILE\AppData\Local\nvim\
 ```
 
+Edit `.gitremotes` to setup the correct git remote URLs.  Then execute `git-remote-init.sh` script
+
 </details>
 
 ### Post Installation
