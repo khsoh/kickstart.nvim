@@ -1,0 +1,4 @@
+origin	https://github.com/khsoh/kickstart.nvim.git (fetch)
+origin	git@github.com:khsoh/kickstart.nvim.git (push)
+upstream	https://github.com/nvim-lua/kickstart.nvim.git (fetch)
+upstream	https://github.com/nvim-lua/kickstart.nvim.git (push)
