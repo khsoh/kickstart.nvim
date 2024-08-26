@@ -81,13 +81,13 @@ git clone https://github.com/khsoh/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/
 If you're using `cmd.exe`:
 
 ```
-git clone https://github.com/nvim-lua/kickstart.nvim.git %localappdata%\nvim\
+git clone https://github.com/nvim-lua/kickstart.nvim.git "%localappdata%\nvim"
 ```
 
 If you're using `powershell.exe`
 
 ```
-git clone https://github.com/nvim-lua/kickstart.nvim.git $env:LOCALAPPDATA\nvim\
+git clone https://github.com/nvim-lua/kickstart.nvim.git "${env:LOCALAPPDATA}\nvim"
 ```
 
 Edit `.gitremotes` to setup the correct git remote URLs.  Then execute `git-remote-init.sh` script
