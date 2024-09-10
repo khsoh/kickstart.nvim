@@ -616,6 +616,7 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         ts_ls = {},
+        nil_ls = {},
         html = { filetypes = { 'html', 'twig', 'hbs' } },
         marksman = {},
         powershell_es = {
