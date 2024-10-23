@@ -624,6 +624,7 @@ require('lazy').setup({
           settings = { powershell = { codeFormatting = { Preset = 'OTBS' } } },
         },
         biome = {},
+        zls = {},
         --
 
         lua_ls = {
