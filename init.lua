@@ -613,6 +613,7 @@ require('lazy').setup({
         },
         biome = {},
         zls = {},
+        ['tree-sitter-cli'] = {},
         --
 
         ['lua-language-server'] = {
@@ -877,13 +878,34 @@ require('lazy').setup({
 
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
     config = function()
-      local filetypes = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
-      require('nvim-treesitter').install(filetypes)
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = filetypes,
-        callback = function() vim.treesitter.start() end,
-      })
+      require('nvim-treesitter').setup {
+        -- 1. Standard parser list (prevents startup re-compilation
+        ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+
+        -- 2. Automatically install missing parsers on-the-fly
+        auto_install = true,
+
+        -- 3. Modern way to enable highlighting (instead of using autocmd
+        highlight = {
+          enable = true,
+          -- Optional: disable for very large files
+          disable = function(lang, buf)
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then return true end
+          end,
+        },
+
+        -- 4. Enable other useful built-in features
+        indent = { enable = true },
+      }
+      -- require('nvim-treesitter').install(filetypes)
+      -- vim.api.nvim_create_autocmd('FileType', {
+      --   pattern = filetypes,
+      --   callback = function() vim.treesitter.start() end,
+      -- })
     end,
   },
 
