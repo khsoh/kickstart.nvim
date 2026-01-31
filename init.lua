@@ -596,18 +596,18 @@ require('lazy').setup({
         clangd = {},
         gopls = {},
         pyright = {},
-        -- rust_analyzer = {},
+        ['rust-analyzer'] = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        ts_ls = {},
-        nil_ls = {},
-        html = { filetypes = { 'html', 'twig', 'hbs' } },
+        ['typescript-language-server'] = {},
+        ['nil'] = {},
+        ['html-lsp'] = { filetypes = { 'html', 'twig', 'hbs' } },
         marksman = {},
-        powershell_es = {
+        ['powershell-editor-services'] = {
           bundle_path = vim.fn.stdpath 'data' .. '/mason/packages/powershell-editor-services',
           settings = { powershell = { codeFormatting = { Preset = 'OTBS' } } },
         },
@@ -615,7 +615,7 @@ require('lazy').setup({
         zls = {},
         --
 
-        lua_ls = {
+        ['lua-language-server'] = {
           -- cmd = { ... },
           -- filetypes = { ... },
           -- capabilities = {},
@@ -640,7 +640,7 @@ require('lazy').setup({
       -- You can press `g?` for help in this menu.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'lua_ls', -- Lua Language server
+        -- 'lua-language-server', -- Lua Language server
         'stylua', -- Used to format Lua code
         -- You can add other tools here that you want Mason to install
       })
