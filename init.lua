@@ -620,21 +620,6 @@ require('lazy').setup({
         zls = {},
         ['tree-sitter-cli'] = {},
         --
-
-        ['lua-language-server'] = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
       }
 
       -- Ensure the servers and tools above are installed
@@ -681,7 +666,13 @@ require('lazy').setup({
           })
         end,
         settings = {
-          Lua = {},
+          Lua = {
+            completion = {
+              callSnippet = 'Replace',
+            },
+            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+            -- diagnostics = { disable = { 'missing-fields' } },
+          },
         },
       })
       vim.lsp.enable 'lua_ls'
