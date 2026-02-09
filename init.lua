@@ -634,6 +634,7 @@ require('lazy').setup({
         -- 'lua-language-server', -- Lua Language server
         'stylua', -- Used to format Lua code
         -- You can add other tools here that you want Mason to install
+        'nixfmt',
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -716,6 +717,7 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        nix = { 'nixfmt' },
       },
     },
   },
