@@ -608,7 +608,6 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        ['typescript-language-server'] = {},
         ['nil'] = {},
         ['html-lsp'] = { filetypes = { 'html', 'twig', 'hbs' } },
         marksman = {},
@@ -678,6 +677,12 @@ require('lazy').setup({
       vim.lsp.enable 'lua_ls'
 
       vim.lsp.enable 'nil_ls'
+
+      vim.lsp.config('ts_ls', {
+        cmd = { 'typescript-language-server', '--stdio' },
+        root_markers = { 'package.json', '.git' },
+      })
+      vim.lsp.enable 'ts_ls'
     end,
   },
 
