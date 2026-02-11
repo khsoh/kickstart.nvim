@@ -618,6 +618,40 @@ require('lazy').setup({
         biome = {},
         zls = {},
         ['tree-sitter-cli'] = {},
+
+        ['typescript-language-server'] = {
+          cmd = { 'typescript-language-server', '--stdio' },
+          -- root_markers is the new standard in 0.11+ replacing root_dir
+          root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json', '.git' },
+          -- Optional: add filetypes if you want to be explicit
+          filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+        },
+
+        ['lua-language-server'] = {
+          -- root_markers identifies the project root (e.g., where init.lua or .git lives)
+          root_markers = { '.luarc.json', '.luarc.jsonc', '.git', 'init.lua' },
+          settings = {
+            Lua = {
+              runtime = {
+                version = 'LuaJIT',
+              },
+              workspace = {
+                checkThirdParty = false,
+                -- This tells lua_ls about Neovim's built-in APIs
+                library = {
+                  vim.env.VIMRUNTIME,
+                  -- Include the nvim lua API
+                  '${3rd}/luv/library',
+                },
+              },
+              completion = {
+                callSnippet = 'Replace',
+              },
+              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+              -- diagnostics = { disable = { 'missing-fields' } },
+            },
+          },
+        },
         --
       }
 
@@ -628,61 +662,30 @@ require('lazy').setup({
       --    :Mason
       --
       -- You can press `g?` for help in this menu.
+
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        -- 'lua-language-server', -- Lua Language server
         'stylua', -- Used to format Lua code
         -- You can add other tools here that you want Mason to install
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+      local registry = require 'mason-registry'
+
       for name, server in pairs(servers) do
+        -- 1. Determine the correct LSP name for Neovim
+        local lsp_name = name
+        local p = registry.get_package(name)
+        --
+        -- -- If Mason has a specific Neovim mapping for this package, use it
+        if p and p.spec.neovim and p.spec.neovim.lspconfig then lsp_name = p.spec.neovim.lspconfig end
+
+        -- 2. Apply your capabilities merge
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-        vim.lsp.config(name, server)
-        vim.lsp.enable(name)
+        vim.lsp.config(lsp_name, server)
+        vim.lsp.enable(lsp_name)
       end
-
-      -- Special Lua Config, as recommended by neovim help docs
-      vim.lsp.config('lua_ls', {
-        on_init = function(client)
-          if client.workspace_folders then
-            local path = client.workspace_folders[1].name
-            if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
-          end
-
-          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-            runtime = {
-              version = 'LuaJIT',
-              path = { 'lua/?.lua', 'lua/?/init.lua' },
-            },
-            workspace = {
-              checkThirdParty = false,
-              -- NOTE: this is a lot slower and will cause issues when working on your own configuration.
-              --  See https://github.com/neovim/nvim-lspconfig/issues/3189
-              library = vim.api.nvim_get_runtime_file('', true),
-            },
-          })
-        end,
-        settings = {
-          Lua = {
-            completion = {
-              callSnippet = 'Replace',
-            },
-            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-            -- diagnostics = { disable = { 'missing-fields' } },
-          },
-        },
-      })
-      vim.lsp.enable 'lua_ls'
-
-      vim.lsp.enable 'nil_ls'
-
-      vim.lsp.config('ts_ls', {
-        cmd = { 'typescript-language-server', '--stdio' },
-        root_markers = { 'package.json', '.git' },
-      })
-      vim.lsp.enable 'ts_ls'
     end,
   },
 
