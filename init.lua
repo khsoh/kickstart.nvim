@@ -675,11 +675,10 @@ require('lazy').setup({
 
       for name, server in pairs(servers) do
         -- 1. Determine the correct LSP name for Neovim
-        local lsp_name = name
         local p = registry.get_package(name)
-        --
-        -- -- If Mason has a specific Neovim mapping for this package, use it
-        if p and p.spec.neovim and p.spec.neovim.lspconfig then lsp_name = p.spec.neovim.lspconfig end
+
+        ---- If Mason has a specific Neovim mapping for this package, use it
+        local lsp_name = p and p.spec and p.spec.neovim and p.spec.neovim.lspconfig or name
 
         -- 2. Apply your capabilities merge
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
