@@ -608,7 +608,6 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        ['nil'] = {},
         ['html-lsp'] = { filetypes = { 'html', 'twig', 'hbs' } },
         marksman = {},
         ['powershell-editor-services'] = {
@@ -652,6 +651,16 @@ require('lazy').setup({
             },
           },
         },
+
+        -- Managed by Nix (nix-darwin)
+        nixd = {
+          is_system_binary = true, -- Custom flag
+          settings = {
+            nixd = {
+              nixpkgs = { expr = 'import <nixpkgs> { }' },
+            },
+          },
+        },
         --
       }
 
@@ -663,7 +672,8 @@ require('lazy').setup({
       --
       -- You can press `g?` for help in this menu.
 
-      local ensure_installed = vim.tbl_keys(servers or {})
+      -- Only ask Mason to install servers that aren't marked as system binaries
+      local ensure_installed = vim.tbl_filter(function(key) return not (servers[key] and servers[key].is_system_binary) end, vim.tbl_keys(servers or {}))
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         -- You can add other tools here that you want Mason to install
@@ -674,11 +684,13 @@ require('lazy').setup({
       local registry = require 'mason-registry'
 
       for name, server in pairs(servers) do
-        -- 1. Determine the correct LSP name for Neovim
-        local p = registry.get_package(name)
+        local lsp_name = name
 
-        ---- If Mason has a specific Neovim mapping for this package, use it
-        local lsp_name = p and p.spec and p.spec.neovim and p.spec.neovim.lspconfig or name
+        -- Only try to query Mason if it's not a system binary
+        if not server.is_system_binary then
+          local p_status, p = pcall(registry.get_package, name)
+          if p_status and p and p.spec and p.spec.neovim then lsp_name = p.spec.neovim.lspconfig or name end
+        end
 
         -- 2. Apply your capabilities merge
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
