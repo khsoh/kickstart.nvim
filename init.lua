@@ -416,6 +416,8 @@ require('lazy').setup({
         group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
         callback = function(event)
           local buf = event.buf
+          local builtin = require 'telescope.builtin' -- Ensure builtin is accessible
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
 
           -- Find references for the word under your cursor.
           vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
@@ -435,8 +437,20 @@ require('lazy').setup({
 
           -- Fuzzy find all the symbols in your current workspace.
           -- Similar to document symbols, except searches over your entire project.
-          vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
-
+          -- vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+          -- Override gW specifically for nixd
+          if client and client.name == 'nixd' then
+            vim.keymap.set('n', 'gW', function()
+              builtin.live_grep {
+                cwd = vim.fn.expand '%:p:h',
+                prompt_title = 'Nix Config Search (Grep)',
+                additional_args = function() return { '--type', 'nix' } end,
+              }
+            end, { buffer = buf, desc = 'Nix: Search Workspace (Grep)' })
+          else
+            -- Default behavior for all other LSPs (C, Lua, etc.)
+            vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+          end
           -- Jump to the type of the word under your cursor.
           -- Useful when you're not sure what type a variable is and you want to see
           -- the definition of its *type*, not where it was *defined*.
