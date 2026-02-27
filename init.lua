@@ -219,6 +219,9 @@ vim.keymap.set('n', '<S-Tab>', ':bprev<CR>', { desc = 'Previous buffer' })
 if vim.g.neovide then
   -- Press 'q' to quit Neovide quickly when viewing scrollback
   vim.keymap.set('n', 'q', ':qa!<CR>', { silent = true })
+
+  -- Set font-family and size
+  vim.o.guifont = 'FiraMono Nerd Font:h18'
 end
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
