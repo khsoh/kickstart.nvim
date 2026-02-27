@@ -216,6 +216,11 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<Tab>', ':bnext<CR>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<S-Tab>', ':bprev<CR>', { desc = 'Previous buffer' })
 
+if vim.g.neovide then
+  -- Press 'q' to quit Neovide quickly when viewing scrollback
+  vim.keymap.set('n', 'q', ':qa!<CR>', { silent = true })
+end
+
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
