@@ -465,6 +465,14 @@ require('lazy').setup({
           -- Useful when you're not sure what type a variable is and you want to see
           -- the definition of its *type*, not where it was *defined*.
           vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
+
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client.name == 'eslint' then
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              buffer = event.buf,
+              command = 'EslintFixAll',
+            })
+          end
         end,
       })
 
@@ -698,6 +706,10 @@ require('lazy').setup({
             },
           },
         },
+
+        ['eslint-lsp'] = {},
+        ['eslint_d'] = {},
+        ['prettierd'] = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -771,7 +783,8 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        -- javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        javascript = { 'prettierd', stop_after_first = true },
         nix = { 'nixfmt' },
       },
     },
