@@ -637,7 +637,7 @@ require('lazy').setup({
         ['rust-analyzer'] = {},
         ['bash-language-server'] = {
           cmd = { 'bash-language-server', 'start' },
-          filetypes = { 'sh', 'bash' },
+          filetypes = { 'sh', 'bash', 'zsh' },
           root_markers = { '.git' },
         },
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs

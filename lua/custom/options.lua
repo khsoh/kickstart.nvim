@@ -18,4 +18,16 @@ vim.o.incsearch = true
 vim.o.relativenumber = true
 vim.o.termguicolors = true
 
+--- Filetype add
+vim.filetype.add {
+  extension = {
+    zsh = 'zsh',
+  },
+  filename = {
+    ['.zshrc'] = 'zsh',
+    ['.zshenv'] = 'zsh',
+    ['.zprofile'] = 'zsh',
+  },
+}
+
 -- vim: ts=2 sts=2 sw=2 et
