@@ -710,6 +710,9 @@ require('lazy').setup({
         ['eslint-lsp'] = {},
         ['eslint_d'] = {},
         ['prettierd'] = {},
+        lemminx = {
+          filetypes = { 'xml', 'xsd', 'xsl', 'xslt', 'svg', 'mobileconfig' },
+        },
       }
 
       -- Ensure the servers and tools above are installed
