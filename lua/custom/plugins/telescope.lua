@@ -1,5 +1,5 @@
--- Install the plugin
-vim.pack.add { 'https://github.com/nvim-telescope/telescope.nvim' }
+-- Install the plugin [ COMMENTED OUT BECAUSE THIS HAS BEEN IMPORTED AT TOP LEVEL ]
+-- vim.pack.add { 'https://github.com/nvim-telescope/telescope.nvim' }
 
 -- Define keymaps for telescope git operations
 -- Using callbacks to lazy-load the builtin module when keys are pressed
