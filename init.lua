@@ -388,19 +388,32 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { gh 'folke/tokyonight.nvim' }
+  -- vim.pack.add { gh 'folke/tokyonight.nvim' }
+  -- ---@diagnostic disable-next-line: missing-fields
+  -- require('tokyonight').setup {
+  --   styles = {
+  --     comments = { italic = false }, -- Disable italics in comments
+  --   },
+  -- }
+  --
+  -- -- Load the colorscheme here.
+  -- -- Like many other themes, this one has different styles, and you could load
+  -- -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  -- vim.cmd.colorscheme 'tokyonight-night'
+
+  -- OVERRIDE
+  vim.pack.add { gh 'catppuccin/nvim' }
   ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
-    styles = {
-      comments = { italic = false }, -- Disable italics in comments
+  require('catppuccin').setup {
+    flavour = 'mocha', -- latte, frappe, macchiato, mocha
+    background = { -- :h background
+      light = 'latte',
+      dark = 'mocha',
     },
   }
+  vim.cmd.colorscheme 'catppuccin'
 
-  -- Load the colorscheme here.
-  -- Like many other themes, this one has different styles, and you could load
-  -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'tokyonight-night'
-
+  -- END OVERRIDE
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
   require('todo-comments').setup { signs = false }
@@ -604,6 +617,33 @@ do
 
   -- Shortcut for searching your Neovim configuration files
   vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
+
+  -- OVERRIDE to search git
+  vim.keymap.set('n', '<leader>gf', function() builtin.git_files() end, {
+    desc = '[G]it [f]iles - search files tracked by git',
+  })
+
+  vim.keymap.set('n', '<leader>gb', function() builtin.git_branches() end, {
+    desc = '[G]it [b]ranches for current directory',
+  })
+
+  vim.keymap.set('n', '<leader>gc', function() builtin.git_commits() end, {
+    desc = '[G]it [c]ommits for current directory',
+  })
+
+  vim.keymap.set('n', '<leader>gt', function() builtin.git_commits() end, {
+    desc = '[G]it commi[t]s for this buffer',
+  })
+
+  vim.keymap.set('n', '<leader>gs', function() builtin.git_status() end, {
+    desc = '[G]it [s]tatus for current directory',
+  })
+
+  vim.keymap.set('n', '<leader>gh', function() builtin.git_stash() end, {
+    desc = '[G]it stas[h] items in currenct repo',
+  })
+
+  -- END OVERRIDE
 end
 
 -- ============================================================
