@@ -1,0 +1,28 @@
+name: Mirror to Codeberg (HTTPS)
+
+on:
+  push:
+  delete:
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetches all history, branches, and tags
+
+      - name: Mirror to Codeberg
+        run: |
+          # Configure git with a dummy user for the sync
+          git config --global user.email "$(git log -1 --format='%ae')"
+          git config --global user.name "$(git log -1 --format='%an')"
+          
+          # Add Codeberg as a remote using the PAT for authentication
+          # Replace USERNAME and REPO with your Codeberg details
+          git remote add codeberg https://khsoh:${{ secrets.CODEBERG_TOKEN }}@codeberg.org/khsoh/kickstart.nvim.git
+          
+          # Force push all branches and tags to Codeberg
+          git push codeberg --mirror
