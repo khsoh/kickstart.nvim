@@ -99,7 +99,7 @@ do
   vim.g.maplocalleader = ' '
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true -- OVERRIDE
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -249,6 +249,9 @@ do
   -- OVERRIDE
   -- Load your custom options
   require 'custom.options'
+
+  -- Load custom keymaps
+  require 'custom.keymaps'
   -- END OVERRIDE
 end
 
@@ -412,8 +415,8 @@ do
     },
   }
   vim.cmd.colorscheme 'catppuccin'
-
   -- END OVERRIDE
+
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
   require('todo-comments').setup { signs = false }
@@ -754,13 +757,12 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   -- OVERRIDE
+  -- NOTE: Enclose the language server name in [ ] if it includes a '-' character
   local servers = {
     clangd = {},
     gopls = {},
     pyright = {},
-    -- TODO - check rust-analyzer
     ['rust-analyzer'] = {},
-    -- TODO - check bash-language-server
     ['bash-language-server'] = {
       cmd = { 'bash-language-server', 'start' },
       filetypes = { 'sh', 'bash', 'zsh' },
@@ -1106,11 +1108,6 @@ do
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   require 'custom.plugins' -- OVERRIDE
-
-  -- OVERRIDE
-  -- Load custom keymaps
-  require 'custom.keymaps'
-  -- END OVERRIDE
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
