@@ -1,7 +1,7 @@
 -- 1. Install the plugin
 vim.pack.add { 'https://github.com/iamcco/markdown-preview.nvim' }
 
--- Lazy load on FileType markdown
+-- Load on FileType markdown
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   once = true,

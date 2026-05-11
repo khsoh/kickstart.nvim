@@ -1,3 +1,6 @@
+--- Global options
+vim.g.is_bash = 1
+
 --- Local options
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
