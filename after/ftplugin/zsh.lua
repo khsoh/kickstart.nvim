@@ -1,1 +1,1 @@
-require 'after.plugin.sh' -- Reuses Bash settings
+require 'after.ftplugin.sh' -- Reuses Bash settings
