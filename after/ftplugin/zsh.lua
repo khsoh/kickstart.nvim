@@ -1,1 +1,1 @@
-require 'after.ftplugin.sh' -- Reuses Bash settings
+vim.cmd.runtime 'after/ftplugin/sh.lua' -- Reuses Bash settings
