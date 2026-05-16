@@ -1,29 +1,23 @@
--- 1. Register the package blueprint with vim.pack globally
+-- 1. Register the plugin block to vim.pack's manifest
 vim.pack.add { 'https://github.com/iamcco/markdown-preview.nvim' }
 
--- 2. Bind everything to the filetype event to handle clean lazy loading
+-- 2. Configure global plugin settings (perfectly safe to do at the top level)
+vim.g.mkdp_auto_start = 0
+
+-- 3. Load the plugin and attach configurations only when a markdown file opens
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
-    -- CRITICAL: Force Neovim to evaluate the plugin's internal scripts immediately
+    -- CRITICAL: Unpack the 'opt' package files into the active session runtime path
     vim.cmd 'packadd markdown-preview.nvim'
 
-    -- Apply plugin configurations safely
-    vim.g.mkdp_auto_start = 0
-
-    -- Set the keymap locally strictly for this buffer
+    -- Safely bind the keymap directly to the open markdown buffer
     vim.keymap.set('n', '<leader>cp', '<cmd>MarkdownPreviewToggle<cr>', {
       desc = 'Markdown Preview',
-      buffer = true, -- Attaches ONLY to active markdown files
+      buffer = true, -- Attaches ONLY to active markdown buffers
     })
-  end,
-})
 
--- 3. Run the Node installer block once if missing
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'markdown',
-  once = true,
-  callback = function()
+    -- Lazy-compile the Node binary one time if missing
     if not vim.g.mkdp_node_installed then
       vim.fn['mkdp#util#install']()
       vim.g.mkdp_node_installed = true
