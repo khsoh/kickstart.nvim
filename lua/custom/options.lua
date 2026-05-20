@@ -17,6 +17,9 @@ vim.o.incsearch = true
 vim.o.relativenumber = true
 vim.o.termguicolors = true
 
+--- Loadd matchit
+vim.cmd 'packadd! matchit'
+
 --- Filetype add
 vim.filetype.add {
   extension = {
