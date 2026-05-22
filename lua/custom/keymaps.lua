@@ -1,10 +1,6 @@
 --- Local keymaps
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
--- Exchange lines in visual mode
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
-
 -- ==== The following are Windows-like system clipboard commands to
 -- copy/cut/paste text (Ctrl-C,X,V).  The Opt key must be mapped to Meta
 -- key in Terminal profile setup

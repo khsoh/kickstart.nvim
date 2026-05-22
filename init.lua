@@ -452,6 +452,10 @@ do
   -- OVERRIDE
   -- Load the mini colorscheme here.
   vim.cmd.colorscheme 'minisummer'
+
+  -- Enable customizable move option
+  require('mini.move').setup()
+
   -- END OVERRIDE
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
