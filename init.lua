@@ -456,6 +456,8 @@ do
   -- Enable customizable move option
   require('mini.move').setup()
 
+  -- Enable jump to next/previous single character
+  require('mini.jump').setup()
   -- END OVERRIDE
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
