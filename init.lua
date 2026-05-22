@@ -404,7 +404,6 @@ do
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
   -- vim.cmd.colorscheme 'tokyonight-night' -- OVERRIDE
-  vim.cmd.colorscheme 'minisummer'
   -- END OVERRIDE
 
   -- Highlight todo, notes, etc in comments
@@ -450,6 +449,10 @@ do
   ---@diagnostic disable-next-line: duplicate-set-field
   statusline.section_location = function() return '%2l:%-2v' end
 
+  -- OVERRIDE
+  -- Load the mini colorscheme here.
+  vim.cmd.colorscheme 'minisummer'
+  -- END OVERRIDE
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
 end
