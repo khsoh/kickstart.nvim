@@ -450,14 +450,66 @@ do
   statusline.section_location = function() return '%2l:%-2v' end
 
   -- OVERRIDE
-  -- Load the mini colorscheme here.
+  ---- Load the mini colorscheme here.
   vim.cmd.colorscheme 'minisummer'
 
-  -- Enable customizable move option
+  ---- Enable customizable move option
   require('mini.move').setup()
 
-  -- Enable jump to next/previous single character
+  ---- Enable jump to next/previous single character
   require('mini.jump').setup()
+
+  ---- Mini keymap combos
+  local map_combo = require('mini.keymap').map_combo
+
+  -- Support most common modes. This can also contain 't', but would
+  -- only mean to press `<Esc>` inside terminal.
+  local mode = { 'i', 'c', 'x', 's' }
+  map_combo(mode, 'jk', function()
+    local current_mode = vim.api.nvim_get_mode().mode
+
+    if current_mode == 'i' then
+      -- 1. <C-G>u creates an isolated undo breakpoint right after the 'j' and 'k' are typed
+      -- 2. <Esc> drops back to normal mode
+      -- 3. u instantly undos the 'jk' characters natively, preserving the pristine buffer state
+      return '<C-G>u<Esc>u'
+    elseif current_mode == 'c' then
+      -- Command-line mode has no undo history, so clearing the line or canceling is cleanest
+      return '<C-C>'
+    else
+      -- Visual ('x') and Select ('s') modes don't insert text, so a pure escape is clean
+      return '<Esc>'
+    end
+  end)
+
+  -- To not have to worry about the order of keys, also map "kj"
+  map_combo(mode, 'kj', function()
+    local current_mode = vim.api.nvim_get_mode().mode
+
+    if current_mode == 'i' then
+      -- 1. <C-G>u creates an isolated undo breakpoint right after the 'k' and 'l' are typed
+      -- 2. <Esc> drops back to normal mode
+      -- 3. u instantly undos the 'kj' characters natively, preserving the pristine buffer state
+      return '<C-G>u<Esc>u'
+    elseif current_mode == 'c' then
+      -- Command-line mode has no undo history, so clearing the line or canceling is cleanest
+      return '<C-C>'
+    else
+      -- Visual ('x') and Select ('s') modes don't insert text, so a pure escape is clean
+      return '<Esc>'
+    end
+  end)
+
+  -- Escape into Normal mode from Terminal mode
+  map_combo('t', 'jk', '<BS><BS><C-\\><C-n>')
+  map_combo('t', 'kj', '<BS><BS><C-\\><C-n>')
+
+  -- Buffer navigation ~
+  map_combo({ 'n', 'x' }, 'll', 'g$')
+  map_combo({ 'n', 'x' }, 'hh', 'g^')
+  map_combo({ 'n', 'x' }, 'jj', '}')
+  map_combo({ 'n', 'x' }, 'kk', '{')
+
   -- END OVERRIDE
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
