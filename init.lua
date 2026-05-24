@@ -465,8 +465,6 @@ do
   -- Buffer navigation ~
   map_combo({ 'n', 'x' }, 'll', 'g$')
   map_combo({ 'n', 'x' }, 'hh', 'g^')
-  map_combo({ 'n', 'x' }, 'jj', '}')
-  map_combo({ 'n', 'x' }, 'kk', '{')
 
   -- END OVERRIDE
   -- ... and there is more!
