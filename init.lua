@@ -489,9 +489,6 @@ do
   local map = function(modes, lhs, rhs, desc) vim.keymap.set(modes, lhs, rhs, { desc = desc }) end
 
   -- Navigation
-  map('n', ']c', function() diff.goto_hunk 'next' end, 'Next Hunk')
-  map('n', '[c', function() diff.goto_hunk 'prev' end, 'Prev Hunk')
-
   -- Actions (Hunk)
   map({ 'n', 'v' }, '<leader>hs', function() diff.operator 'apply' end, 'Stage Hunk')
   map({ 'n', 'v' }, '<leader>hr', function() diff.operator 'reset' end, 'Reset Hunk')
