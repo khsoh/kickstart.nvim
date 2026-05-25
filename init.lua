@@ -359,16 +359,18 @@ do
   --
   -- See `:help gitsigns` to understand what each configuration key does.
   -- Adds git related signs to the gutter, as well as utilities for managing changes
-  vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
-  require('gitsigns').setup {
-    signs = {
-      add = { text = '+' }, ---@diagnostic disable-line: missing-fields
-      change = { text = '~' }, ---@diagnostic disable-line: missing-fields
-      delete = { text = '_' }, ---@diagnostic disable-line: missing-fields
-      topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
-      changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
-    },
-  }
+  -- OVERRIDE
+  -- vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
+  -- require('gitsigns').setup {
+  --   signs = {
+  --     add = { text = '+' }, ---@diagnostic disable-line: missing-fields
+  --     change = { text = '~' }, ---@diagnostic disable-line: missing-fields
+  --     delete = { text = '_' }, ---@diagnostic disable-line: missing-fields
+  --     topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
+  --     changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
+  --   },
+  -- }
+  -- END OVERRIDE
 
   -- Useful plugin to show you pending keybinds.
   vim.pack.add { gh 'folke/which-key.nvim' }
@@ -380,7 +382,7 @@ do
     spec = {
       { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
       { '<leader>t', group = '[T]oggle' },
-      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
+      -- { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first - OVERRIDE
       { 'gr', group = 'LSP Actions', mode = { 'n' } },
     },
   }
@@ -466,6 +468,49 @@ do
   map_combo({ 'n', 'x' }, 'll', 'g$')
   map_combo({ 'n', 'x' }, 'hh', 'g^')
 
+  ---- Mini diff and mini git setup
+
+  -- Helpers
+  local diff = require 'mini.diff'
+  local git = require 'mini.git'
+
+  diff.setup {
+    view = {
+      style = 'sign',
+      signs = {
+        add = '+',
+        change = '~',
+        delete = '-',
+      },
+    },
+  }
+  git.setup()
+
+  local map = function(modes, lhs, rhs, desc) vim.keymap.set(modes, lhs, rhs, { desc = desc }) end
+
+  -- Navigation
+  map('n', ']c', function() diff.goto_hunk 'next' end, 'Next Hunk')
+  map('n', '[c', function() diff.goto_hunk 'prev' end, 'Prev Hunk')
+
+  -- Actions (Hunk)
+  map({ 'n', 'v' }, '<leader>hs', function() diff.operator 'apply' end, 'Stage Hunk')
+  map({ 'n', 'v' }, '<leader>hr', function() diff.operator 'reset' end, 'Reset Hunk')
+
+  -- Actions (Buffer)
+  map('n', '<leader>hS', ':Git add %<CR>', 'Git Add')
+  map('n', '<leader>hR', ':Git checkout %<CR>', 'Reset Buffer')
+
+  -- Preview/Blame/Diff
+  map('n', '<leader>hp', function() diff.toggle_overlay(0) end, 'Preview Hunk')
+  map('n', '<leader>hb', function() git.show_at_cursor() end, 'Blame Line')
+  map('n', '<leader>hd', '<cmd>Git Diff<CR>', 'Git Diff')
+
+  -- Git commit && push
+  map('n', '<leader>hc', '<cmd>Git commit<CR>', 'Git Commit (Interactive)')
+  map('n', '<leader>hk', '<cmd>Git push<CR>', 'Git Push')
+
+  -- Text Object
+  map({ 'o', 'x' }, 'ih', function() diff.textobject() end, 'Inside Hunk')
   -- END OVERRIDE
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
