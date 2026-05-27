@@ -500,7 +500,7 @@ do
   -- Preview/Blame/Diff
   map('n', '<leader>hp', function() diff.toggle_overlay(0) end, 'Preview Hunk')
   map('n', '<leader>hb', function() git.show_at_cursor() end, 'Blame Line')
-  map('n', '<leader>hd', '<cmd>Git Diff<CR>', 'Git Diff')
+  map('n', '<leader>hd', '<cmd>Git diff<CR>', 'Git Diff')
 
   -- Git commit && push
   map('n', '<leader>hc', '<cmd>Git commit<CR>', 'Git Commit (Interactive)')
@@ -981,7 +981,7 @@ do
       -- OVERRIDE
       javascript = { 'prettierd', stop_after_first = true },
       nix = { 'nixfmt' },
-      -- END OVERRID
+      -- END OVERRIDE
     },
   }
 
