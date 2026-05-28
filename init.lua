@@ -981,8 +981,17 @@ do
       -- OVERRIDE
       javascript = { 'prettierd', stop_after_first = true },
       nix = { 'nixfmt' },
+      lua = { 'stylua' },
       -- END OVERRIDE
     },
+    -- OVERRIDE
+    formatters = {
+      stylua = {
+        -- Pass CLI arguments to force spaces instead of tabs
+        args = { '--indent-type', 'Spaces', '--indent-width', '2', '-' },
+      },
+    },
+    -- END OVERRIDE
   }
 
   vim.keymap.set({ 'n', 'v' }, '<leader>f', function() require('conform').format { async = true } end, { desc = '[F]ormat buffer' })
