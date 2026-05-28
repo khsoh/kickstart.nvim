@@ -988,7 +988,7 @@ do
     formatters = {
       stylua = {
         -- Pass CLI arguments to force spaces instead of tabs
-        args = { '--indent-type', 'Spaces', '--indent-width', '2', '-' },
+        args = { '--quote-style', 'Preserve', '--indent-type', 'Spaces', '--indent-width', '2', '-' },
       },
     },
     -- END OVERRIDE
